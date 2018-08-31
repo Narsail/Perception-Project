@@ -199,16 +199,19 @@ def pr2_mover(object_list):
 
     output_list = []
 
+    # Get the set object list
     object_list_param = rospy.get_param('/object_list')
 
     # Create the Labels and Centroids
     centroids = {}
 
+    # Aggregate the centroids of the recognized objects
     for object in object_list:
 
         points_arr = ros_to_pcl(object.cloud).to_array()
         centroids[object.label] = np.mean(points_arr, axis=0)[:3]
 
+    # Quick info about which objects we expect and which we got.
     rospy.loginfo(
         'Expected {} and got: {}'.format(
             [object_params['name'] for object_params in object_list_param], 
@@ -220,6 +223,7 @@ def pr2_mover(object_list):
 
         name = object_params['name']
 
+        # Abort the iteration if no recognized object for this listed object has been found.
         if name not in centroids.keys():
             continue
 
@@ -228,17 +232,20 @@ def pr2_mover(object_list):
         object_name = String()
         object_name.data = name
 
-        # Convert the numpy float64 to native python floats
+        # Convert numpy float64 to python floats
         centroid = [np.asscalar(x) for x in centroids[name]] 
 
+        # Store the object position
         pose = Pose()
         pose.position.x = centroid[0]
         pose.position.y = centroid[1]
         pose.position.z = centroid[2]
 
+        # Decide which arm to use based on the object group
         arm_to_use = String()
         arm_to_use.data = 'right' if object_group == 'green' else 'left'
 
+        # Set manually according to the test world
         scene_num = Int32()
         scene_num.data = 3
 

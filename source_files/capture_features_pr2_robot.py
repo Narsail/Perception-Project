@@ -39,6 +39,8 @@ if __name__ == '__main__':
     initial_setup()
     labeled_features = []
 
+    # Defined the number of positions here and histogram bins
+    # - chosen by trial and error (25 / 50 / 75) - 93% accuracy was considered enough
     number_of_random_positions = 75
     histogram_bins = 64
 

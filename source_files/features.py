@@ -11,7 +11,9 @@ def rgb_to_hsv(rgb_list):
 
 
 def compute_color_histograms(cloud, nr_of_bins, using_hsv=False):
-
+    """
+    Was adjusted to allow a custom number of histogram bins.
+    """
     # Compute histograms for the clusters
     point_colors_list = []
 
@@ -46,6 +48,9 @@ def compute_color_histograms(cloud, nr_of_bins, using_hsv=False):
 
 
 def compute_normal_histograms(normal_cloud, nr_of_bins):
+    """
+    Was adjusted to allow a custom number of histogram bins.
+    """
     norm_x_vals = []
     norm_y_vals = []
     norm_z_vals = []

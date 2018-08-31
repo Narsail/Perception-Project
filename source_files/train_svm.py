@@ -62,6 +62,7 @@ encoder = LabelEncoder()
 y_train = encoder.fit_transform(y_train)
 
 # Create classifier
+# Used RBF kernel because the linear kernel was not powerful enough the separate the maximum number of objects we faced
 clf = svm.SVC(kernel='rbf')
 
 # Set up 5-fold cross-validation
